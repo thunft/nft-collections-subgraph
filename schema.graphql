@@ -1,0 +1,28 @@
+type CollectionData @entity {
+  id: ID!
+  collectionId: BigInt! # uint256
+  name: String!
+  description: String!
+  owner: Bytes! # address
+  imageURI: String!
+  blockchain: String!
+  totalSupply: BigInt! # uint256
+  mintDate: BigInt! # uint256
+  price: BigInt! # uint256
+  websiteURL: String!
+  twitter: String!
+  discord: String!
+  email: String!
+  openseaURL: String!
+  tags: [String!]!
+  paymentPlan: String!
+  isVariablePaymentPlan: Boolean!
+  status: BigInt!
+}
+
+type PaymentPlanHistory @entity {
+  id: ID!
+  collectionId: BigInt! # uint256
+  startDate: BigInt! # uint256
+  paymentPlan: String!
+}

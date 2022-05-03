@@ -1,0 +1,50 @@
+specVersion: 0.0.2
+schema:
+  file: schema.graphql
+dataSources:
+  - kind: ethereum
+    name: NFTCollections
+    network: mumbai
+    source:
+      address: "0x3c69F0F376c956E792F2A774668e8B43cB5446d6"
+      abi: NFTCollections
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - CollectionCancelled
+        - CollectionContactCreated
+        - CollectionCreated
+        - CollectionPublished
+        - CollectionRequestPlanUpgrade
+        - CollectionUpdated
+        - EndVariablePaymentPlan
+        - OwnershipTransferred
+        - PaymentPlanHistoryAdded
+        - StartVariablePaymentPlan
+      abis:
+        - name: NFTCollections
+          file: NFTCollections/abis/NFTCollections.json
+      eventHandlers:
+        - event: CollectionCancelled(uint256,uint256)
+          handler: handleCollectionCancelled
+        - event: CollectionContactCreated(uint256,string,string,string,string,string,string[],string,bool,uint256)
+          handler: handleCollectionContactCreated
+        - event: CollectionCreated(address,uint256,string,string,string,string,uint256,uint256,uint256)
+          handler: handleCollectionCreated
+        - event: CollectionPublished(uint256,string,uint256)
+          handler: handleCollectionPublished
+        - event: CollectionRequestPlanUpgrade(uint256,string,uint256)
+          handler: handleCollectionRequestPlanUpgrade
+        - event: CollectionUpdated(uint256,string,string,string,string,uint256,uint256,uint256,string[],string[],string[])
+          handler: handleCollectionUpdated
+        - event: EndVariablePaymentPlan(uint256,bool)
+          handler: handleEndVariablePaymentPlan
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: PaymentPlanHistoryAdded(uint256,uint256,string)
+          handler: handlePaymentPlanHistoryAdded
+        - event: StartVariablePaymentPlan(uint256,bool)
+          handler: handleStartVariablePaymentPlan
+      file: NFTCollections/NFTCollections.wasm
