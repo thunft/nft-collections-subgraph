@@ -1,13 +1,13 @@
 {
-  "name": "nftcollections-v2",
+  "name": "nft-collections",
   "license": "UNLICENSED",
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
-    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ albertocruzluis/nftcollections-v2",
-    "create-local": "graph create --node http://localhost:8020/ albertocruzluis/nftcollections-v2",
-    "remove-local": "graph remove --node http://localhost:8020/ albertocruzluis/nftcollections-v2",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 albertocruzluis/nftcollections-v2"
+    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ thunft/nft-collections",
+    "create-local": "graph create --node http://localhost:8020/ thunft/nft-collections",
+    "remove-local": "graph remove --node http://localhost:8020/ thunft/nft-collections",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 thunft/nft-collections"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "0.29.0",

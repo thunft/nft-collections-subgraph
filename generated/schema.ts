@@ -34,6 +34,8 @@ export class CollectionData extends Entity {
     this.set("paymentPlan", Value.fromString(""));
     this.set("isVariablePaymentPlan", Value.fromBoolean(false));
     this.set("status", Value.fromBigInt(BigInt.zero()));
+    this.set("createdAt", Value.fromBigInt(BigInt.zero()));
+    this.set("updateAt", Value.fromBigInt(BigInt.zero()));
   }
 
   save(): void {
@@ -222,16 +224,50 @@ export class CollectionData extends Entity {
   set status(value: BigInt) {
     this.set("status", Value.fromBigInt(value));
   }
+
+  get createdAt(): BigInt {
+    let value = this.get("createdAt");
+    return value!.toBigInt();
+  }
+
+  set createdAt(value: BigInt) {
+    this.set("createdAt", Value.fromBigInt(value));
+  }
+
+  get updateAt(): BigInt {
+    let value = this.get("updateAt");
+    return value!.toBigInt();
+  }
+
+  set updateAt(value: BigInt) {
+    this.set("updateAt", Value.fromBigInt(value));
+  }
+
+  get paymentPlanHistory(): Array<string> | null {
+    let value = this.get("paymentPlanHistory");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toStringArray();
+    }
+  }
+
+  set paymentPlanHistory(value: Array<string> | null) {
+    if (!value) {
+      this.unset("paymentPlanHistory");
+    } else {
+      this.set(
+        "paymentPlanHistory",
+        Value.fromStringArray(<Array<string>>value)
+      );
+    }
+  }
 }
 
 export class PaymentPlanHistory extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
-
-    this.set("collectionId", Value.fromBigInt(BigInt.zero()));
-    this.set("startDate", Value.fromBigInt(BigInt.zero()));
-    this.set("paymentPlan", Value.fromString(""));
   }
 
   save(): void {
@@ -261,6 +297,77 @@ export class PaymentPlanHistory extends Entity {
     this.set("id", Value.fromString(value));
   }
 
+  get collectionId(): string | null {
+    let value = this.get("collectionId");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set collectionId(value: string | null) {
+    if (!value) {
+      this.unset("collectionId");
+    } else {
+      this.set("collectionId", Value.fromString(<string>value));
+    }
+  }
+
+  get paymentList(): Array<string> | null {
+    let value = this.get("paymentList");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toStringArray();
+    }
+  }
+
+  set paymentList(value: Array<string> | null) {
+    if (!value) {
+      this.unset("paymentList");
+    } else {
+      this.set("paymentList", Value.fromStringArray(<Array<string>>value));
+    }
+  }
+}
+
+export class PaymentInfo extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("collectionId", Value.fromBigInt(BigInt.zero()));
+    this.set("startDate", Value.fromBigInt(BigInt.zero()));
+    this.set("paymentPlan", Value.fromString(""));
+    this.set("paymentTxHash", Value.fromString(""));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save PaymentInfo entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type PaymentInfo must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("PaymentInfo", id.toString(), this);
+    }
+  }
+
+  static load(id: string): PaymentInfo | null {
+    return changetype<PaymentInfo | null>(store.get("PaymentInfo", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
   get collectionId(): BigInt {
     let value = this.get("collectionId");
     return value!.toBigInt();
@@ -268,6 +375,23 @@ export class PaymentPlanHistory extends Entity {
 
   set collectionId(value: BigInt) {
     this.set("collectionId", Value.fromBigInt(value));
+  }
+
+  get paymentPlanHistoryId(): string | null {
+    let value = this.get("paymentPlanHistoryId");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set paymentPlanHistoryId(value: string | null) {
+    if (!value) {
+      this.unset("paymentPlanHistoryId");
+    } else {
+      this.set("paymentPlanHistoryId", Value.fromString(<string>value));
+    }
   }
 
   get startDate(): BigInt {
@@ -286,5 +410,14 @@ export class PaymentPlanHistory extends Entity {
 
   set paymentPlan(value: string) {
     this.set("paymentPlan", Value.fromString(value));
+  }
+
+  get paymentTxHash(): string {
+    let value = this.get("paymentTxHash");
+    return value!.toString();
+  }
+
+  set paymentTxHash(value: string) {
+    this.set("paymentTxHash", Value.fromString(value));
   }
 }

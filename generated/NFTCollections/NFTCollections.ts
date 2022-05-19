@@ -314,6 +314,10 @@ export class PaymentPlanHistoryAdded__Params {
   get paymentPlan(): string {
     return this._event.parameters[2].value.toString();
   }
+
+  get paymentTxHash(): string {
+    return this._event.parameters[3].value.toString();
+  }
 }
 
 export class StartVariablePaymentPlan extends ethereum.Event {
@@ -406,48 +410,32 @@ export class CreateCollectionCall__Inputs {
     this._call = call;
   }
 
-  get _name(): string {
-    return this._call.inputValues[0].value.toString();
-  }
-
-  get _description(): string {
-    return this._call.inputValues[1].value.toString();
-  }
-
-  get _imageURI(): string {
-    return this._call.inputValues[2].value.toString();
-  }
-
-  get _blockchain(): string {
-    return this._call.inputValues[3].value.toString();
+  get _collectionInfo(): Array<string> {
+    return this._call.inputValues[0].value.toStringArray();
   }
 
   get _totalSupply(): BigInt {
-    return this._call.inputValues[4].value.toBigInt();
+    return this._call.inputValues[1].value.toBigInt();
   }
 
-  get _mintDate(): BigInt {
-    return this._call.inputValues[5].value.toBigInt();
-  }
-
-  get _price(): BigInt {
-    return this._call.inputValues[6].value.toBigInt();
+  get _mintingInfo(): Array<BigInt> {
+    return this._call.inputValues[2].value.toBigIntArray();
   }
 
   get _contactData(): Array<string> {
-    return this._call.inputValues[7].value.toStringArray();
+    return this._call.inputValues[3].value.toStringArray();
   }
 
   get _marketplaceData(): Array<string> {
-    return this._call.inputValues[8].value.toStringArray();
+    return this._call.inputValues[4].value.toStringArray();
   }
 
   get _tags(): Array<string> {
-    return this._call.inputValues[9].value.toStringArray();
+    return this._call.inputValues[5].value.toStringArray();
   }
 
-  get _paymentPlan(): string {
-    return this._call.inputValues[10].value.toString();
+  get _paymentInfo(): Array<string> {
+    return this._call.inputValues[6].value.toStringArray();
   }
 }
 
@@ -698,6 +686,10 @@ export class UpgradePlanCall__Inputs {
 
   get _paymentPlan(): string {
     return this._call.inputValues[1].value.toString();
+  }
+
+  get _paymentTxHash(): string {
+    return this._call.inputValues[2].value.toString();
   }
 }
 

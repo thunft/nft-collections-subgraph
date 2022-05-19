@@ -12,7 +12,7 @@ import {
   PaymentPlanHistoryAdded,
   StartVariablePaymentPlan
 } from "../generated/NFTCollections/NFTCollections"
-import { CollectionData, PaymentPlanHistory } from "../generated/schema"
+import { CollectionData, PaymentPlanHistory, PaymentInfo } from "../generated/schema"
 
 export function handleCollectionCancelled(event: CollectionCancelled): void {
   let collection = CollectionData.load(event.params.id.toString())
@@ -60,6 +60,7 @@ export function handleCollectionCreated(event: CollectionCreated): void {
 
   collection.mintDate = event.params.mintDate
   collection.price = event.params.price
+  collection.createdAt = event.block.timestamp
 
   collection.save()
 }
@@ -114,6 +115,7 @@ export function handleCollectionUpdated(event: CollectionUpdated): void {
   collection.openseaURL = event.params.marketplaceData[0]
 
   collection.tags = event.params.tags
+  collection.updateAt = event.block.timestamp
 
   collection.save()
 }
@@ -142,8 +144,16 @@ export function handlePaymentPlanHistoryAdded(
     paymentPlanHistory = new PaymentPlanHistory(event.params.collectionId.toString())
   }
 
-  paymentPlanHistory.paymentPlan = event.params.paymentPlan
-  paymentPlanHistory.startDate = event.params.startDate
+  paymentPlanHistory.collectionId = event.params.collectionId.toString()
+
+  let paymentInfo = new PaymentInfo(event.params.paymentTxHash.toString())
+  paymentInfo.collectionId = event.params.collectionId
+  paymentInfo.paymentPlanHistoryId = event.params.collectionId.toString()
+  paymentInfo.paymentPlan = event.params.paymentPlan
+  paymentInfo.startDate = event.params.startDate
+  paymentInfo.paymentTxHash = event.params.paymentTxHash
+
+  paymentInfo.save()
   paymentPlanHistory.save()
 }
 

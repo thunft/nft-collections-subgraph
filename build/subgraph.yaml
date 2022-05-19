@@ -6,7 +6,7 @@ dataSources:
     name: NFTCollections
     network: mumbai
     source:
-      address: "0x3c69F0F376c956E792F2A774668e8B43cB5446d6"
+      address: "0xB1B45077e814af0986E1b541Ffc4bCD7E8360Fa7"
       abi: NFTCollections
     mapping:
       kind: ethereum/events
@@ -43,7 +43,7 @@ dataSources:
           handler: handleEndVariablePaymentPlan
         - event: OwnershipTransferred(indexed address,indexed address)
           handler: handleOwnershipTransferred
-        - event: PaymentPlanHistoryAdded(uint256,uint256,string)
+        - event: PaymentPlanHistoryAdded(uint256,uint256,string,string)
           handler: handlePaymentPlanHistoryAdded
         - event: StartVariablePaymentPlan(uint256,bool)
           handler: handleStartVariablePaymentPlan

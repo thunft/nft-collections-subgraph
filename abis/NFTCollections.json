@@ -327,6 +327,12 @@
         "internalType": "string",
         "name": "paymentPlan",
         "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "paymentTxHash",
+        "type": "string"
       }
     ],
     "name": "PaymentPlanHistoryAdded",
@@ -362,13 +368,17 @@
   },
   {
     "inputs": [
-      { "internalType": "string", "name": "_name", "type": "string" },
-      { "internalType": "string", "name": "_description", "type": "string" },
-      { "internalType": "string", "name": "_imageURI", "type": "string" },
-      { "internalType": "string", "name": "_blockchain", "type": "string" },
+      {
+        "internalType": "string[]",
+        "name": "_collectionInfo",
+        "type": "string[]"
+      },
       { "internalType": "uint256", "name": "_totalSupply", "type": "uint256" },
-      { "internalType": "uint256", "name": "_mintDate", "type": "uint256" },
-      { "internalType": "uint256", "name": "_price", "type": "uint256" },
+      {
+        "internalType": "uint256[]",
+        "name": "_mintingInfo",
+        "type": "uint256[]"
+      },
       {
         "internalType": "string[]",
         "name": "_contactData",
@@ -380,7 +390,7 @@
         "type": "string[]"
       },
       { "internalType": "string[]", "name": "_tags", "type": "string[]" },
-      { "internalType": "string", "name": "_paymentPlan", "type": "string" }
+      { "internalType": "string[]", "name": "_paymentInfo", "type": "string[]" }
     ],
     "name": "createCollection",
     "outputs": [],
@@ -467,7 +477,8 @@
   {
     "inputs": [
       { "internalType": "uint256", "name": "_collectionId", "type": "uint256" },
-      { "internalType": "string", "name": "_paymentPlan", "type": "string" }
+      { "internalType": "string", "name": "_paymentPlan", "type": "string" },
+      { "internalType": "string", "name": "_paymentTxHash", "type": "string" }
     ],
     "name": "upgradePlan",
     "outputs": [],

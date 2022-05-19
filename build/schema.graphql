@@ -18,11 +18,23 @@ type CollectionData @entity {
   paymentPlan: String!
   isVariablePaymentPlan: Boolean!
   status: BigInt!
+  createdAt: BigInt! # uint256
+  updateAt: BigInt! # uint256
+  paymentPlanHistory: [PaymentPlanHistory!] @derivedFrom(field: "collectionId")
 }
 
 type PaymentPlanHistory @entity {
   id: ID!
+  collectionId: CollectionData
+  paymentList: [PaymentInfo!] @derivedFrom(field: "paymentPlanHistoryId")
+}
+  
+
+type PaymentInfo @entity {
+  id: ID!
   collectionId: BigInt! # uint256
+  paymentPlanHistoryId: PaymentPlanHistory
   startDate: BigInt! # uint256
   paymentPlan: String!
+  paymentTxHash: String!
 }
